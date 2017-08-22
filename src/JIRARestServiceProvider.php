@@ -13,7 +13,7 @@ class JIRARestServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        include __DIR__.'/routes.php';
     }
 
     /**
@@ -23,7 +23,7 @@ class JIRARestServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        include __DIR__.'/routes.php';
+
         $this->app->make('rkjohnson2005\JIRARest\JIRARestController');
     }
 }
