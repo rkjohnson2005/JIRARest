@@ -1,0 +1,14 @@
+{
+    "name": "rjohnson2005/jira-rest",
+    "description": "Add JIRA Rest functioniality to Laravel",
+    "authors": [
+        {
+            "name": "Rick Johnson",
+            "email": "development@rkjohn.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+
+    }
+}
