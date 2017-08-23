@@ -7,7 +7,9 @@
             "email": "development@rkjohn.com"
         }
     ],
-    "require": {},
+    "require": {
+        "guzzlehttp/guzzle": ">1"
+    },
     "autoload": {
         "psr-4": {
             "App\\": "app/",
