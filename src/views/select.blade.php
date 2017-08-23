@@ -1,1 +1,0 @@
-{!!  \Form::select('issuetype', $issuetypes,  $selected, ['class' => 'form-control' ]) !!}
