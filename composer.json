@@ -10,7 +10,13 @@
     "require": {
         "guzzlehttp/guzzle": ">1"
     },
+    "require-dev": {
+        "guzzlehttp/guzzle": ">1"
+    },
     "autoload": {
+        "classmap": [
+            "src/"
+        ],
         "psr-4": {
             "App\\": "app/",
             "rkjohnson2005\\JIRARest\\": "src/"
