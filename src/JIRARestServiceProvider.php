@@ -13,11 +13,11 @@ class JIRARestServiceProvider extends LaravelServiceProvider {
      * @return void
      */
     public function boot() {
-        $this->handleConfigs();
+        //$this->handleConfigs();
         // $this->handleMigrations();
         // $this->handleViews();
         // $this->handleTranslations();
-        // $this->handleRoutes();
+        $this->handleRoutes();
     }
     /**
      * Register the service provider.
@@ -51,6 +51,7 @@ class JIRARestServiceProvider extends LaravelServiceProvider {
 //        $this->publishes([__DIR__ . '/../migrations' => base_path('database/migrations')]);
 //    }
     private function handleRoutes() {
-        include __DIR__.'/../routes.php';
+        include __DIR__.'/routes.php';
+        $this->app->make('rkjohnson2005\JIRARest\JIRARestController');
     }
 }

@@ -1,6 +1,7 @@
 {
     "name": "rkjohnson2005/jira-rest",
     "description": "Add JIRA Rest functioniality to Laravel",
+    "license": "MIT",
     "authors": [
         {
             "name": "Rick Johnson",
@@ -8,6 +9,7 @@
         }
     ],
     "require": {
+        "php": ">=7"
         "guzzlehttp/guzzle": ">1"
     },
     "require-dev": {

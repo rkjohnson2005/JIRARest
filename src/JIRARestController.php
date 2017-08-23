@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace rkjohnson2005\JIRARest;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class JIRAController extends Controller
+class JIRARestController extends Controller
 {
     public function getCustomFieldContext($location_field_id) {
         // Get Custom Fields
