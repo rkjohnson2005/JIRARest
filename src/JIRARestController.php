@@ -70,4 +70,29 @@ class JIRARestController extends Controller
         $body = json_decode($request->getBody()->getContents());
         return $body->renderedFields->comment->comments;
     }
+
+
+    // Field Functions
+    public function getFields() {
+        $request = $this->client->get('/rest/api/latest/field', $this->auth);
+        $body = $request->getBody();
+        return $body;
+    }
+
+    public function getFieldInputs($key) {
+        $issue = json_decode(app('rkjohnson2005\JIRARest\JIRARestController')->getIssue($key)->getContents());
+        $inputs = [];
+        dd($issue);
+        foreach($issue->fields AS $field_name => $field_parameters) {
+            switch ($field_name) {
+                case 'issuetype':
+                    $issuetypes = app('rkjohnson2005\JIRARest\JIRARestController')->getProjectIssueTypes($issue->fields->project->key);
+                    $types = [];
+                    foreach ($issuetypes AS $issuetype) {
+                        $types[$issuetype->id] = $issuetype->name;
+                    }
+                     view('JIRARest::select', ['issuetypes' => $types, 'selected' => $field_parameters->id]);
+            }
+        }
+    }
 }

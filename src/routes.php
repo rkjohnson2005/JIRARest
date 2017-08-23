@@ -9,3 +9,7 @@ Route::get('jirarest/{project}/issuetypes', 'rkjohnson2005\JIRARest\JIRARestCont
 // Issue Routes
 Route::get('jirarest/issue/{issue}', 'rkjohnson2005\JIRARest\JIRARestController@getIssue');
 Route::get('jirarest/issue/{issue}/comments', 'rkjohnson2005\JIRARest\JIRARestController@getIssueComments');
+
+// Field Routes
+Route::get('jirarest/fields', 'rkjohnson2005\JIRARest\JIRARestController@getFields');
+Route::get('jirarest/{issue}/fieldinputs', 'rkjohnson2005\JIRARest\JIRARestController@getFieldInputs');

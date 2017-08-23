@@ -1,6 +1,6 @@
 <?php
 
-namespace rjohnson2005\JIRARest;
+namespace rkjohnson2005\JIRARest;
 
 class JIRARest
 {
