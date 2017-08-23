@@ -28,8 +28,35 @@ class JIRARest
         $this->auth = ['auth' => [$user, $password]];
     }
 
-
-
+    public function getSelectData($json_array, $id_field, $value_field)
+    {
+        $select_data = [];
+        foreach ($json_array AS $item) {
+            $id_fields = explode('->', $id_field);
+            $end = end($id_fields);
+            $id_item = $item;
+            foreach ($id_fields AS $field) {
+                if ($end != $field) {
+                    $id_item = $id_item->$field;
+                } else {
+                    $id_field_value = $id_item->{$field};
+                }
+            }
+            
+            $value_fields = explode('->', $value_field);
+            $end = end($value_fields);
+            $value_item = $item;
+            foreach ($value_fields AS $field) {
+                if ($end != $field) {
+                    $value_item = $value_item->$field;
+                } else {
+                    $value_field_value = $value_item->{$field};
+                }
+            }
+            $select_data[$id_field_value] = $value_field_value;
+        }
+        return $select_data;
+    }
 
     // Issue Functions
     public function getIssues($project)

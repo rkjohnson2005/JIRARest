@@ -12,7 +12,8 @@ class JIRAProject extends JIRARest
     public function getProjects()
     {
         $request = $this->client->get('/rest/api/latest/project', $this->auth);
-        $body = json_decode($request->getBody()->getContents());;
+        $body = json_decode($request->getBody()->getContents());
+
         return $body;
     }
 
@@ -25,5 +26,15 @@ class JIRAProject extends JIRARest
             }
         }
         return null;
+    }
+
+    public function getIssues($project, $fields = '')
+    {
+        if (is_array($fields)) {
+            $fields = "&fields=".implode(',',$fields);
+        }
+        $request = $this->client->get('/rest/api/latest/search?jql='.urlencode("project=".$project). $fields .'&maxResults=-1', $this->auth);
+        $issues = json_decode($request->getBody()->getContents());
+        return $issues->issues;
     }
 }
