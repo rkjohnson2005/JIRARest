@@ -1,6 +1,11 @@
 <?php
 
-namespace rkjohnson2005\JIRARest;
+namespace rkjohnson2005;
+
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
+
 
 class JIRARest
 {
@@ -28,5 +33,64 @@ class JIRARest
         $request = $this->client->get('/rest/api/latest/project', $this->auth);
         $body = json_decode($request->getBody()->getContents());;
         return $body;
+    }
+
+    public function getProjectIssuetypes($project) {
+        $request = $this->client->get('/rest/api/latest/issue/createmeta', $this->auth);
+        $body = json_decode($request->getBody()->getContents());
+        foreach ($body->projects AS $jira_project) {
+            if ($jira_project->key == $project || $jira_project->id == $project) {
+                return $jira_project->issuetypes;
+            }
+        }
+        return null;
+    }
+
+
+    // Issue Functions
+    public function getIssues($project)
+    {
+        $request = $this->client->get('/rest/api/latest/search?jql='.urlencode("project=".$project).'&maxResults=250', $this->auth);
+        $body = json_decode($request->getBody()->getContents());
+        return $body->issues;
+    }
+
+    public function getIssue($issue)
+    {
+        $request = $this->client->get('/rest/api/latest/issue/'.$issue, $this->auth);
+        $body = $request->getBody();
+        return $body;
+    }
+
+    public function getIssueComments($issue)
+    {
+        $request = $this->client->get("/rest/api/latest/issue/{$issue}?expand=renderedFields", $this->auth);
+        $body = json_decode($request->getBody()->getContents());
+        return $body->renderedFields->comment->comments;
+    }
+
+
+    // Field Functions
+    public function getFields() {
+        $request = $this->client->get('/rest/api/latest/field', $this->auth);
+        $body = $request->getBody();
+        return $body;
+    }
+
+    public function getFieldInputs($key) {
+        $issue = json_decode(app('rkjohnson2005\JIRARest\JIRARestController')->getIssue($key)->getContents());
+        $inputs = [];
+        dd($issue);
+        foreach($issue->fields AS $field_name => $field_parameters) {
+            switch ($field_name) {
+                case 'issuetype':
+                    $issuetypes = app('rkjohnson2005\JIRARest\JIRARestController')->getProjectIssueTypes($issue->fields->project->key);
+                    $types = [];
+                    foreach ($issuetypes AS $issuetype) {
+                        $types[$issuetype->id] = $issuetype->name;
+                    }
+                    view('JIRARest::select', ['issuetypes' => $types, 'selected' => $field_parameters->id]);
+            }
+        }
     }
 }
