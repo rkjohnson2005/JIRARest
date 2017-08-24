@@ -15,4 +15,10 @@ class JIRACustomField extends JIRARest {
         $body = json_decode($request->getBody()->getContents());
         return $body;
     }
+
+    public function getContextOptions($customfield_id, $context_id) {
+        $request = $this->client->get("/rest/jiracustomfieldeditorplugin/1/user/customfields/{$customfield_id}/contexts/{$context_id}/options", $this->auth);
+        $body = json_decode($request->getBody()->getContents());
+        return $body;
+    }
 }

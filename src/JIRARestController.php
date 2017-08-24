@@ -14,4 +14,16 @@ class JIRARestController extends Controller
         $jira_custom_field_context = $jira_custom_field->getSelectData($jira_custom_field_context, 'contextId', 'contextName');
         return $jira_custom_field_context;
     }
+
+    public function getContextOptions($customdfield_id, $context_id) {
+        // Get Context Options
+        if ($customdfield_id && $context_id) {
+            $jira_custom_field = new JIRACustomField();
+            $jira_custom_field_context = $jira_custom_field->getContextOptions($customdfield_id, $context_id);
+            $jira_custom_field_context = $jira_custom_field->getSelectData($jira_custom_field_context, 'contextId', 'contextName');
+            return $jira_custom_field_context;
+        } else {
+            return null;
+        }
+    }
 }
